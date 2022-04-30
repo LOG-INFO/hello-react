@@ -43,15 +43,65 @@ html, body, #root, #root>div {
   }
 }
 
+.createButton {
+  right: 0;
+  width: 80%;
+  display: inline-block;
+  margin: 15px 100px 10px auto;
+  font-size: 120%;
+}
+
+.navigationElement {
+  width: 100%;
+  height: 60px;
+  float: right;
+  display: flex;
+}
+
+.listButtonsBox {
+  width: 40%;
+  float: right;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.listButton {
+  width: 35%;
+  height: 40%;
+  overflow: hidden;
+  font-size: 60%;
+  display: flex;
+  margin: 0 auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+ul {
+  list-style: none; /* Remove default bullets */
+}
+
+.maxLength100{
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  width: 60%;
+  height: 50px;
+}
+
 .navigation{
-  width: 300px;
+  padding-left: 30px;
+  width: 400px;
   height: 100%;
   float:left;
   overflow: hidden;
+  position: relative;
   background-color: #282c34;
 }
 
 .content{
+  padding: 30px;
   width: 300px;
   left: 100px;
   float:left;
