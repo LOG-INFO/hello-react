@@ -18,8 +18,36 @@ function Header(props) {
   </header>
 }
 
+function CreateButton(props) {
+  return <button onClick={event => {
+    props.setMode("CREATE")
+  }}>
+    CREATE
+  </button>
+}
+
+function CreateForm(props) {
+  const save = () => {
+    const newTopic = {
+      title: document.getElementById("newTitle").value,
+      body: document.getElementById("newBody").value,
+    }
+    console.log(newTopic)
+    topics.push(newTopic)
+    props.setTopic(newTopic)
+  }
+
+  return <div>
+    <form onSubmit={event => { event.preventDefault(); save() }}>
+      <p><input id="newTitle" type="text" placeholder="타이틀을 입력하세요" /></p>
+      <p><textarea id="newBody" placeholder="내용을 입력하세요" rows="10" cols="50" /></p>
+      <p><input type="submit" value="작성" /></p>
+    </form>
+  </div>
+}
+
 function ListElement(props) {
-  const { topic} = props
+  const { topic } = props
   const onClick = (event) => {
     event.preventDefault();
     props.onClick(topic)
@@ -31,10 +59,11 @@ function ListElement(props) {
 
 function Navigation(props) {
   const onClick = (topic) => {
-    props.setMode(topic)
+    props.setMode("READ")
+    props.setTopic(topic)
   }
 
-  const list = props.topics.map(topic => <ListElement topic={topic} onClick={onClick} />)
+  const list = props.topics.map(topic => <ListElement key={topic.id} topic={topic} onClick={onClick} />)
 
   return <nav>
     <ol>
@@ -50,25 +79,40 @@ function Article(props) {
   </article>
 }
 
-function App() {
-  const topics = [
-    { id: 1, title: 'html', body: 'HTML is ...' },
-    { id: 2, title: 'css', body: 'CSS is ...' },
-    { id: 3, title: 'Javascript', body: 'Javascript is ...' },
-  ]
+const topics = [
+  { id: 1, title: 'html', body: 'HTML is ...' },
+  { id: 2, title: 'css', body: 'CSS is ...' },
+  { id: 3, title: 'Javascript', body: 'Javascript is ...' },
+]
 
-  const [mode, setMode] = useState(topics[0])
+function App() {
+  const [mode, setMode] = useState(null)
+  const [topic, setTopic] = useState(null)
+  console.log(topics)
+
   let content = null
-  const onContent = (topic) => {
-    content = <Article title={topic.title} body={topic.body} />
+  const setContent = () => {
+    switch (mode) {
+      case "CREATE":
+        content = <CreateForm topics={topics} setTopic={setTopic} />
+        break
+      case "READ":
+        content = <Article title={topic.title} body={topic.body} />
+        break
+    }
   }
-  onContent(mode)
+  setContent()
 
   return (
-    <div>
-      <Header />
-      <Navigation topics={topics} setMode={setMode} />
-      {content}
+    <div >
+      <div className="navigation">
+        <Header />
+        <CreateButton setMode={setMode} />
+        <Navigation topics={topics} setMode={setMode} setTopic={setTopic} />
+      </div>
+      <div className="content">
+        {content}
+      </div>
     </div>
   );
 }

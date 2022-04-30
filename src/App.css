@@ -1,3 +1,9 @@
+html, body, #root, #root>div {
+  margin: 0;
+  height: 100%;
+  overflow: hidden;
+}
+
 .App {
   text-align: center;
 }
@@ -35,4 +41,19 @@
   to {
     transform: rotate(360deg);
   }
+}
+
+.navigation{
+  width: 300px;
+  height: 100%;
+  float:left;
+  overflow: hidden;
+  background-color: #282c34;
+}
+
+.content{
+  width: 300px;
+  left: 100px;
+  float:left;
+  margin-left: 50px;
 }
